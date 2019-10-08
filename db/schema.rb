@@ -10,13 +10,25 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_10_06_165907) do
+ActiveRecord::Schema.define(version: 2019_10_08_202431) do
+
+  create_table "groups", force: :cascade do |t|
+    t.string "name"
+    t.string "team"
+    t.boolean "inGym"
+    t.boolean "offSite"
+    t.integer "mileage"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.decimal "hours"
+  end
 
   create_table "users", force: :cascade do |t|
     t.string "username"
     t.string "password_digest"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.decimal "rate"
   end
 
 end
