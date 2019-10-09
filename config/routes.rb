@@ -7,7 +7,9 @@ Rails.application.routes.draw do
     namespace :api do
       namespace :v1 do
         resources :users
-        resources :payrolls
+        resources :payrolls do
+         resources :groups
+         end
         resources :groups
       end
     end
