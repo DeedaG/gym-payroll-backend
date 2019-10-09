@@ -1,4 +1,4 @@
-class PayrollsController < ApplicationController
+class Api::V1::PayrollsController < ApplicationController
   before_action :set_payroll, only: [:show, :update, :destroy]
 
   # GET /payrolls
