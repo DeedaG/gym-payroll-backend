@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_10_09_030040) do
+ActiveRecord::Schema.define(version: 2019_10_09_234518) do
 
   create_table "groups", force: :cascade do |t|
     t.string "name"
@@ -21,6 +21,8 @@ ActiveRecord::Schema.define(version: 2019_10_09_030040) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.decimal "hours"
+    t.integer "payroll_id"
+    t.index ["payroll_id"], name: "index_groups_on_payroll_id"
   end
 
   create_table "payrolls", force: :cascade do |t|
