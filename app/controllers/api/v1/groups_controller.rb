@@ -51,6 +51,6 @@ class Api::V1::GroupsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def group_params
-      params.require(:group).permit(:name, :team, :inGym, :offSite, :mileage)
+      params.require(:group).permit(:name, :team, :inGym, :offSite, :mileage, :hours)
     end
 end
