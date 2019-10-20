@@ -27,10 +27,10 @@ class Api::V1::PayrollsController < ApplicationController
   def create
     # @payroll = Payroll.new(payroll_params)
     @payroll = current_user.payrolls.build(payroll_params)
-    @groups = params[:groups].map do |gid|
-                gid[:id]
+    @records = params[:records].map do |rid|
+                rid[:id]
               end
-    @payroll.groups = Group.find(@groups.uniq)
+    @payroll.records = Record.find(@records.uniq)
     if @payroll.save
       render json: PayrollSerializer.new(@payroll), status: :created
       # render :show, status: :created, location: @payroll
@@ -67,6 +67,6 @@ class Api::V1::PayrollsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def payroll_params
-      params.require(:payroll).permit(:payPeriod, :total, :workdate, {:groups_attributes => [:id, :payroll_id]})
+      params.require(:payroll).permit(:payPeriod, :total, {:records_attributes => [:id, :payroll_id]})
     end
 end
