@@ -4,13 +4,22 @@ class Api::V1::PayrollsController < ApplicationController
   # GET /payrolls
   # GET /payrolls.json
   def index
-    @payrolls = Payroll.all
-    render json: PayrollSerializer.new(@payrolls)
+    if logged_in?
+      @payrolls = current_user.payrolls
+      render json: PayrollSerializer.new(@payrolls)
+    else
+      render json: {
+        error: "You must be logged in to see payrolls"
+      }
+    end
+
+
   end
 
   # GET /payrolls/1
   # GET /payrolls/1.json
   def show
+    render json: @payroll
   end
 
   # POST /payrolls
@@ -18,8 +27,8 @@ class Api::V1::PayrollsController < ApplicationController
   def create
     # @payroll = Payroll.new(payroll_params)
     @payroll = current_user.payrolls.build(payroll_params)
-    @groups = params[:groups].map do |lid|
-                lid[:id]
+    @groups = params[:groups].map do |gid|
+                gid[:id]
               end
     @payroll.groups = Group.find(@groups.uniq)
     if @payroll.save
@@ -58,6 +67,6 @@ class Api::V1::PayrollsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def payroll_params
-      params.require(:payroll).permit(:payPeriod, :total)
+      params.require(:payroll).permit(:payPeriod, :total, :workdate, {:groups_attributes => [:id, :payroll_id]})
     end
 end
