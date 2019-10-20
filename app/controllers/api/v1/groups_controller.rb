@@ -11,7 +11,9 @@ class Api::V1::GroupsController < ApplicationController
   # GET /groups/1
   # GET /groups/1.json
   def show
-    render json: @group
+    # render json: @group
+    group_json = GroupSerializer.new(@group)
+    render json: group_json
   end
 
   # POST /groups
