@@ -1,7 +1,7 @@
 class PayrollSerializer
   include FastJsonapi::ObjectSerializer
-  attributes :payPeriod, :workdate, :total
+  attributes :payPeriod, :total
 
   belongs_to :user
-  has_many :groups, serializer: GroupSerializer
+  has_many :records, serializer: RecordSerializer
 end
