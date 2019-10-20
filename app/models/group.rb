@@ -1,3 +1,3 @@
 class Group < ApplicationRecord
-  belongs_to :payroll, optional: true
+  belongs_to :record, optional: true
 end
