@@ -8,8 +8,10 @@ Rails.application.routes.draw do
       namespace :v1 do
         resources :users
         resources :payrolls do
-         resources :groups
-         end
+          resources :records
+           end
+          resources :records do
+            resources :groups
         resources :groups
       end
     end
