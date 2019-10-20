@@ -12,6 +12,7 @@ Rails.application.routes.draw do
            end
           resources :records do
             resources :groups
+          end
         resources :groups
       end
     end
