@@ -44,6 +44,6 @@ class Api::V1::RecordsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def record_params
-      params.require(:record).permit(:workdate, :totalHours)
+      params.require(:record).permit(:workdate, :totalHours, :payroll_id)
     end
 end
