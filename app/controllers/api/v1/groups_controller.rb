@@ -11,7 +11,9 @@ class Api::V1::GroupsController < ApplicationController
   # GET /groups/1
   # GET /groups/1.json
   def show
-    render json: @group
+    # render json: @group
+    group_json = GroupSerializer.new(@group)
+    render json: group_json
   end
 
   # POST /groups
@@ -51,6 +53,6 @@ class Api::V1::GroupsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def group_params
-      params.require(:group).permit(:name, :team, :inGym, :offSite, :mileage)
+      params.require(:group).permit(:name, :team, :inGym, :offSite, :mileage, :hours, :record_id)
     end
 end

@@ -4,30 +4,46 @@ class Api::V1::PayrollsController < ApplicationController
   # GET /payrolls
   # GET /payrolls.json
   def index
-    @payrolls = Payroll.all
-    render json: PayrollSerializer.new(@payrolls)
+    if logged_in?
+      @payrolls = current_user.payrolls
+      render json: PayrollSerializer.new(@payrolls)
+    else
+      render json: {
+        error: "You must be logged in to see payrolls"
+      }
+    end
+
+
   end
 
   # GET /payrolls/1
   # GET /payrolls/1.json
   def show
+    render json: @payroll
   end
 
   # POST /payrolls
   # POST /payrolls.json
   def create
-    @payroll = Payroll.new(payroll_params)
-
+    # @payroll = Payroll.new(payroll_params)
+    @payroll = current_user.payrolls.build(payroll_params)
+    @records = params[:records].map do |rid|
+                rid[:id]
+              end
+    @payroll.records = Record.find(@records.uniq)
     if @payroll.save
-      render json: PayrollSerializer.new(@payroll)
+      render json: PayrollSerializer.new(@payroll), status: :created
       # render :show, status: :created, location: @payroll
     else
-      render json: @payroll.errors, status: :unprocessable_entity
+      # render json: @payroll.errors, status: :unprocessable_entity
+      error_resp = {
+        error: @payroll.errors.full_messages.to_sentence
+      }
+      render json: error_resp, status: :unprocessable_entity
     end
   end
 
-  # PATCH/PUT /payrolls/1
-  # PATCH/PUT /payrolls/1.json
+
   def update
     if @payroll.update(payroll_params)
       render json: PayrollSerializer.new(@payroll)
@@ -51,6 +67,6 @@ class Api::V1::PayrollsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def payroll_params
-      params.require(:payroll).permit(:payPeriod, :total)
+      params.require(:payroll).permit(:payPeriod, :total, {:records_attributes => [:id, :payroll_id]})
     end
 end

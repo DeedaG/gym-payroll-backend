@@ -1,6 +1,6 @@
 class GroupSerializer
   include FastJsonapi::ObjectSerializer
-  attributes :name, :team, :inGym, :offSite, :mileage
+  attributes :name, :team, :inGym, :offSite, :mileage, :hours
 
-  belongs_to :payroll
+  belongs_to :record
 end

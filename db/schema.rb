@@ -10,7 +10,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
+<<<<<<< HEAD
 ActiveRecord::Schema.define(version: 2019_10_10_124638) do
+=======
+ActiveRecord::Schema.define(version: 2019_10_21_012307) do
+>>>>>>> 6226bb2834bb73574d4148eab2c06641e8f921fa
 
   create_table "groups", force: :cascade do |t|
     t.string "name"
@@ -21,8 +25,8 @@ ActiveRecord::Schema.define(version: 2019_10_10_124638) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.decimal "hours"
-    t.integer "payroll_id"
-    t.index ["payroll_id"], name: "index_groups_on_payroll_id"
+    t.integer "record_id"
+    t.index ["record_id"], name: "index_groups_on_record_id"
   end
 
   create_table "payrolls", force: :cascade do |t|
@@ -32,6 +36,14 @@ ActiveRecord::Schema.define(version: 2019_10_10_124638) do
     t.datetime "updated_at", null: false
     t.integer "user_id"
     t.date "workDay"
+  end
+
+  create_table "records", force: :cascade do |t|
+    t.date "workdate"
+    t.integer "payroll_id"
+    t.decimal "totalHours"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "users", force: :cascade do |t|
