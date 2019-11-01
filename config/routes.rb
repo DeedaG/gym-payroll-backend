@@ -10,10 +10,11 @@ Rails.application.routes.draw do
         resources :payrolls do
           resources :records
            end
-          resources :records do
-            resources :groups
-          end
+        resources :records do
+          resources :groups
+        end
         resources :groups
+        resources :records
       end
     end
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
