@@ -11,10 +11,12 @@ class Api::V1::RecordsController < ApplicationController
     render json: record_json
   end
 
-
   def create
     @record = Record.new(record_params)
-
+    @groups = params[:groups].map do |rid|
+                rid[:id]
+              end
+    @record.groups = Group.find(@groups.uniq)
     if @record.save
       render json: RecordSerializer.new(@record), status: :created
     else
