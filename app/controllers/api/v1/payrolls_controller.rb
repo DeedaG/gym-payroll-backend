@@ -22,15 +22,18 @@ class Api::V1::PayrollsController < ApplicationController
     render json: @payroll
   end
 
-  # POST /payrolls
-  # POST /payrolls.json
+
   def create
-    # @payroll = Payroll.new(payroll_params)
     @payroll = current_user.payrolls.build(payroll_params)
-    @records = params[:records].map do |rid|
-                rid[:id]
-              end
-    @payroll.records = Record.find(@records.uniq)
+    # binding.pry
+      if params[:records].length > 0
+        @records = params[:records].map do |rid|
+                    rid[:id]
+                  end
+        @payroll.records = Record.find(@records.uniq)
+      else
+      end
+
     if @payroll.save
       render json: PayrollSerializer.new(@payroll), status: :created
       # render :show, status: :created, location: @payroll
