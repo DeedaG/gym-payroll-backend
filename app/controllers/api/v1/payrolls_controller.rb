@@ -26,7 +26,8 @@ class Api::V1::PayrollsController < ApplicationController
   def create
     @payroll = current_user.payrolls.build(payroll_params)
     # binding.pry
-      if params[:records].length > 0
+      if params[:records]
+        binding.pry
         @records = params[:records].map do |rid|
                     rid[:id]
                   end
