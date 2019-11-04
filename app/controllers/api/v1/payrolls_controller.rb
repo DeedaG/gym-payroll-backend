@@ -27,7 +27,7 @@ class Api::V1::PayrollsController < ApplicationController
     @payroll = current_user.payrolls.build(payroll_params)
     # binding.pry
       if params[:records]
-        binding.pry
+        # binding.pry
         @records = params[:records].map do |rid|
                     rid[:id]
                   end
