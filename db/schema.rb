@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_10_21_012307) do
+ActiveRecord::Schema.define(version: 2019_11_04_222821) do
 
   create_table "groups", force: :cascade do |t|
     t.string "name"
@@ -31,7 +31,6 @@ ActiveRecord::Schema.define(version: 2019_10_21_012307) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "user_id"
-    t.date "workDay"
   end
 
   create_table "records", force: :cascade do |t|
