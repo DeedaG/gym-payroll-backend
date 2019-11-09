@@ -15,6 +15,7 @@ class Api::V1::RecordsController < ApplicationController
   def create
     # binding.pry
     @record = Record.new(record_params)
+    # @group = Group.find_or_create_by_id(Group.id)
     @groups = params[:groups].map do |gid|
                 gid[:id]
               end

@@ -23,12 +23,12 @@ class Api::V1::PayrollsController < ApplicationController
 
   def create
     @payroll = current_user.payrolls.build(payroll_params)
-    binding.pry
+    # @record = Record.find_or_create_by(id: Record.id)
     @records = params[:records].map do |record|
-                record[:id]
+                record
               end
-              # binding.pry
-    @payroll.records = Record.find(@records)
+    @payroll.records = Record.find_or_create_by(@records[:id])
+    # binding.pry
     if @payroll.save
       render json: PayrollSerializer.new(@payroll), status: :created
     else
@@ -41,7 +41,8 @@ class Api::V1::PayrollsController < ApplicationController
 
 
   def update
-    if @payroll.update(payroll_params)
+  # binding.pry
+    if @payroll.records.update(payroll_params)
       render json: PayrollSerializer.new(@payroll)
       # render :show, status: :ok, location: @payroll
     else
@@ -56,6 +57,7 @@ class Api::V1::PayrollsController < ApplicationController
   end
 
   private
+# binding.pry
     # Use callbacks to share common setup or constraints between actions.
     def set_payroll
       @payroll = Payroll.find(params[:id])
