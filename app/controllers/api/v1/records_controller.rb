@@ -4,17 +4,19 @@ class Api::V1::RecordsController < ApplicationController
 
   def index
     @records = Record.all
-    render json: GroupSerializer.new(@records)
+    render json: RecordSerializer.new(@records)
   end
+
   def show
     record_json = RecordSerializer.new(@record)
     render json: record_json
   end
 
   def create
+    # binding.pry
     @record = Record.new(record_params)
-    @groups = params[:groups].map do |rid|
-                rid[:id]
+    @groups = params[:groups].map do |gid|
+                gid[:id]
               end
     @record.groups = Group.find(@groups.uniq)
     if @record.save
@@ -46,6 +48,6 @@ class Api::V1::RecordsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def record_params
-      params.require(:record).permit(:workdate, :totalHours, :payroll_id)
+      params.require(:record).permit(:workdate, :totalHours, :payroll_id, {:groups_attributes => [:id, :record_id]})
     end
 end
