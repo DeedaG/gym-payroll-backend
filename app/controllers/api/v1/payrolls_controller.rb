@@ -12,8 +12,6 @@ class Api::V1::PayrollsController < ApplicationController
         error: "You must be logged in to see payrolls"
       }
     end
-
-
   end
 
   # GET /payrolls/1
@@ -25,21 +23,15 @@ class Api::V1::PayrollsController < ApplicationController
 
   def create
     @payroll = current_user.payrolls.build(payroll_params)
-    # binding.pry
-      if params[:records]
-        # binding.pry
-        @records = params[:records].map do |rid|
-                    rid[:id]
-                  end
-        @payroll.records = Record.find(@records.uniq)
-      else
-      end
-
+    binding.pry
+    @records = params[:records].map do |record|
+                record[:id]
+              end
+              # binding.pry
+    @payroll.records = Record.find(@records)
     if @payroll.save
       render json: PayrollSerializer.new(@payroll), status: :created
-      # render :show, status: :created, location: @payroll
     else
-      # render json: @payroll.errors, status: :unprocessable_entity
       error_resp = {
         error: @payroll.errors.full_messages.to_sentence
       }
