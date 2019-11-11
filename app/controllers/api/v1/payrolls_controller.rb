@@ -23,12 +23,7 @@ class Api::V1::PayrollsController < ApplicationController
 
   def create
     @payroll = current_user.payrolls.build(payroll_params)
-    # @record = Record.find_or_create_by(id: Record.id)
-    @records = params[:records].map do |record|
-                record
-              end
-    @payroll.records = Record.find_or_create_by(@records[:id])
-    # binding.pry
+    
     if @payroll.save
       render json: PayrollSerializer.new(@payroll), status: :created
     else
