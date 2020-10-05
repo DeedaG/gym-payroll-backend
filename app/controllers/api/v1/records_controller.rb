@@ -20,6 +20,7 @@ class Api::V1::RecordsController < ApplicationController
                 gid[:id]
               end
     @record.groups = Group.find(@groups.uniq)
+    # binding.pry
     if @record.save
       render json: RecordSerializer.new(@record), status: :created
     else

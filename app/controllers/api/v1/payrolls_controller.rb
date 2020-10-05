@@ -23,7 +23,7 @@ class Api::V1::PayrollsController < ApplicationController
 
   def create
     @payroll = current_user.payrolls.build(payroll_params)
-    
+
     if @payroll.save
       render json: PayrollSerializer.new(@payroll), status: :created
     else
