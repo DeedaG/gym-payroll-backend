@@ -36,7 +36,6 @@ class Api::V1::PayrollsController < ApplicationController
 
 
   def update
-  # binding.pry
     if @payroll.records.update(payroll_params)
       render json: PayrollSerializer.new(@payroll)
       # render :show, status: :ok, location: @payroll
