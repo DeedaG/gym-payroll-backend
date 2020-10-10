@@ -37,6 +37,10 @@ class Api::V1::PayrollsController < ApplicationController
 
   def update
     # binding.pry
+    @records = params[:records].map do |rid|
+                rid[:id]
+              end
+    @payroll.records = Record.find(@records.uniq)
     if @payroll.records.update(payroll_params)
       render json: PayrollSerializer.new(@payroll)
       # render :show, status: :ok, location: @payroll
