@@ -36,6 +36,7 @@ class Api::V1::PayrollsController < ApplicationController
 
 
   def update
+    # binding.pry
     if @payroll.records.update(payroll_params)
       render json: PayrollSerializer.new(@payroll)
       # render :show, status: :ok, location: @payroll
@@ -59,6 +60,6 @@ class Api::V1::PayrollsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def payroll_params
-      params.require(:payroll).permit(:payPeriod, :total, {:records_attributes => [:id, :payroll_id]})
+      params.require(:payroll).permit(:id, :payPeriod, :total, {:records_attributes => [:id, :payroll_id]})
     end
 end
