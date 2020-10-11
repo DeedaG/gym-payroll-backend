@@ -13,14 +13,12 @@ class Api::V1::RecordsController < ApplicationController
   end
 
   def create
-    # binding.pry
     @record = Record.new(record_params)
     # @group = Group.find_or_create_by_id(Group.id)
     @groups = params[:groups].map do |gid|
                 gid[:id]
               end
     @record.groups = Group.find(@groups.uniq)
-    # binding.pry
     if @record.save
       render json: RecordSerializer.new(@record), status: :created
     else
