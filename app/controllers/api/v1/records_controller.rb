@@ -14,12 +14,15 @@ class Api::V1::RecordsController < ApplicationController
 
   def create
     @record = Record.new(record_params)
-    # @group = Group.find_or_create_by_id(Group.id)
     @groups = params[:groups].map do |gid|
                 gid[:id]
               end
     @record.groups = Group.find(@groups.uniq)
+    @payroll = Payroll.find_or_create_by(params[:payroll_id])
+
     if @record.save
+      @payroll.records << @record
+      # binding.pry
       render json: RecordSerializer.new(@record), status: :created
     else
       render json: @record.errors, status: :unprocessable_entity
@@ -29,7 +32,7 @@ class Api::V1::RecordsController < ApplicationController
   def update
     if @record.update(record_params)
       render json: RecordSerializer.new(@record), status: :ok
-      render :show, status: :ok, location: @record
+      # render :show, status: :ok, location: @record
     else
       render json: @record.errors, status: :unprocessable_entity
     end
@@ -38,6 +41,7 @@ class Api::V1::RecordsController < ApplicationController
 
   def destroy
     @record.destroy
+    render json: RecordSerializer.new(@record)
   end
 
   private

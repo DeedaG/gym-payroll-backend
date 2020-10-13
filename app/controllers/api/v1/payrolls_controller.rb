@@ -34,33 +34,29 @@ class Api::V1::PayrollsController < ApplicationController
     end
   end
 
+  def myfunc(total, num)
+    return total + num;
+  end
 
   def update
-    # binding.pry
     @payroll = current_user.payrolls.find(params[:id])
-    # @records = params[:records].map do |rid|
-    #             rid[:id]
-    #           end
-    # @payroll.records = Record.find(@records.uniq)
-    binding.pry
-    if @payroll.records.update(payroll_params)
-      render json: PayrollSerializer.new(@payroll)
-      # render :show, status: :ok, location: @payroll
+
+    @payroll.total = current_user.payRate
+    if @payroll.update(payroll_params)
+      render json: @payroll
+      # render json: PayrollSerializer.new(@payroll)
     else
       render json: @payroll.errors, status: :unprocessable_entity
     end
   end
 
-  # DELETE /payrolls/1
-  # DELETE /payrolls/1.json
   def destroy
     @payroll.destroy
+    render json: PayrollSerializer.new(@payrolls)
   end
 
   private
-# binding.pry
-    # Use callbacks to share common setup or constraints between actions.
-    def set_payroll
+  def set_payroll
       @payroll = Payroll.find(params[:id])
     end
 
