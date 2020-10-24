@@ -18,7 +18,7 @@ class Api::V1::RecordsController < ApplicationController
                 gid[:id]
               end
     @record.groups = Group.find(@groups.uniq)
-    @payroll = Payroll.find_or_create_by(params[:payroll_id])
+    @payroll = Payroll.find_by(id: params[:payroll_id])
 
     if @record.save
       @payroll.records << @record

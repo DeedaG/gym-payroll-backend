@@ -41,7 +41,7 @@ class Api::V1::PayrollsController < ApplicationController
   def update
     @payroll = current_user.payrolls.find(params[:id])
 
-    @payroll.total = current_user.payRate
+    # @payroll.total = current_user.payRate
     if @payroll.update(payroll_params)
       render json: @payroll
       # render json: PayrollSerializer.new(@payroll)
