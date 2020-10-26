@@ -22,7 +22,6 @@ class Api::V1::RecordsController < ApplicationController
 
     if @record.save
       @payroll.records << @record
-      # binding.pry
       render json: RecordSerializer.new(@record), status: :created
     else
       render json: @record.errors, status: :unprocessable_entity
