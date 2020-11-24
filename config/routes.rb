@@ -7,13 +7,14 @@ Rails.application.routes.draw do
     namespace :api do
       namespace :v1 do
         resources :users
+        resources :groups
         resources :payrolls do
           resources :records
            end
-          resources :records do
-            resources :groups
-          end
-        resources :groups
+        resources :records do
+          resources :groups
+        end
+
       end
     end
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html

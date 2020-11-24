@@ -12,8 +12,6 @@ class Api::V1::PayrollsController < ApplicationController
         error: "You must be logged in to see payrolls"
       }
     end
-
-
   end
 
   # GET /payrolls/1
@@ -22,6 +20,7 @@ class Api::V1::PayrollsController < ApplicationController
     render json: @payroll
   end
 
+<<<<<<< HEAD
   def create
     # @payroll = Payroll.new(payroll_params)
     @payrolls = current_user.payrolls
@@ -35,13 +34,17 @@ class Api::V1::PayrollsController < ApplicationController
       if @records != nil
         @payroll.records = Record.find(@records.uniq)
       end
+=======
+
+  def create
+    @payroll = current_user.payrolls.build(payroll_params)
+
+>>>>>>> 518ca360c9a7b47436d4b82611b689b0be7a635c
     if @payroll.save
       # binding.pry
       @payrolls << @payroll
       render json: PayrollSerializer.new(@payroll), status: :created
-      # render :show, status: :created, location: @payroll
     else
-      # render json: @payroll.errors, status: :unprocessable_entity
       error_resp = {
         error: @payroll.errors.full_messages.to_sentence
       }
@@ -49,8 +52,12 @@ class Api::V1::PayrollsController < ApplicationController
     end
   end
 
+  def myfunc(total, num)
+    return total + num;
+  end
 
   def update
+<<<<<<< HEAD
     if params[:records] != "" && params[:records] != nil
       @records = params[:records].map do |rid|
                   rid[:id]
@@ -60,16 +67,19 @@ class Api::V1::PayrollsController < ApplicationController
       if @records != nil
         @payroll.records = Record.find(@records.uniq)
       end
+=======
+    @payroll = current_user.payrolls.find(params[:id])
+
+    # @payroll.total = current_user.payRate
+>>>>>>> 518ca360c9a7b47436d4b82611b689b0be7a635c
     if @payroll.update(payroll_params)
-      render json: PayrollSerializer.new(@payroll)
-      # render :show, status: :ok, location: @payroll
+      render json: @payroll
+      # render json: PayrollSerializer.new(@payroll)
     else
       render json: @payroll.errors, status: :unprocessable_entity
     end
   end
 
-  # DELETE /payrolls/1
-  # DELETE /payrolls/1.json
   def destroy
     if params[:records] != "" && params[:records] != nil
       @records = params[:records].map do |rid|
@@ -84,17 +94,20 @@ class Api::V1::PayrollsController < ApplicationController
     @payroll.records.destroy
 
     @payroll.destroy
+<<<<<<< HEAD
 
+=======
+    render json: PayrollSerializer.new(@payrolls)
+>>>>>>> 518ca360c9a7b47436d4b82611b689b0be7a635c
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_payroll
+  def set_payroll
       @payroll = Payroll.find(params[:id])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def payroll_params
-      params.require(:payroll).permit(:payPeriod, :total, {:records_attributes => [:id, :payroll_id]})
+      params.require(:payroll).permit(:id, :payPeriod, :total, {:records_attributes => [:id, :payroll_id]})
     end
 end
