@@ -22,16 +22,22 @@ class Api::V1::PayrollsController < ApplicationController
     render json: @payroll
   end
 
-  # POST /payrolls
-  # POST /payrolls.json
   def create
     # @payroll = Payroll.new(payroll_params)
+    @payrolls = current_user.payrolls
     @payroll = current_user.payrolls.build(payroll_params)
-    @records = params[:records].map do |rid|
-                rid[:id]
-              end
-    @payroll.records = Record.find(@records.uniq)
+    if params[:records] != "" && params[:records] != nil
+      @records = params[:records].map do |rid|
+                  rid[:id]
+                end
+      else
+      end
+      if @records != nil
+        @payroll.records = Record.find(@records.uniq)
+      end
     if @payroll.save
+      # binding.pry
+      @payrolls << @payroll
       render json: PayrollSerializer.new(@payroll), status: :created
       # render :show, status: :created, location: @payroll
     else
@@ -45,6 +51,15 @@ class Api::V1::PayrollsController < ApplicationController
 
 
   def update
+    if params[:records] != "" && params[:records] != nil
+      @records = params[:records].map do |rid|
+                  rid[:id]
+                end
+      else
+      end
+      if @records != nil
+        @payroll.records = Record.find(@records.uniq)
+      end
     if @payroll.update(payroll_params)
       render json: PayrollSerializer.new(@payroll)
       # render :show, status: :ok, location: @payroll
@@ -56,7 +71,20 @@ class Api::V1::PayrollsController < ApplicationController
   # DELETE /payrolls/1
   # DELETE /payrolls/1.json
   def destroy
+    if params[:records] != "" && params[:records] != nil
+      @records = params[:records].map do |rid|
+                  rid[:id]
+                end
+      else
+      end
+      if @records != nil
+        @payroll.records = Record.find(@records.uniq)
+      end
+
+    @payroll.records.destroy
+
     @payroll.destroy
+
   end
 
   private
