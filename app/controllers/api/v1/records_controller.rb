@@ -1,10 +1,10 @@
 class Api::V1::RecordsController < ApplicationController
 
-  before_action :set_group, only: [:show, :update, :destroy]
+  before_action :set_record, only: [:show, :update, :destroy]
 
   def index
     @records = Record.all
-    render json: GroupSerializer.new(@records)
+    render json: RecordSerializer.new(@records)
   end
   def show
     record_json = RecordSerializer.new(@record)
@@ -44,6 +44,6 @@ class Api::V1::RecordsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def record_params
-      params.require(:record).permit(:workdate, :totalHours, :payroll_id)
+      params.require(:record).permit(:workdate, :totalHours, :payroll_id, {:groups_attributes => [:id, :record_id]})
     end
 end
