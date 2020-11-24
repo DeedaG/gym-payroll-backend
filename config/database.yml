@@ -22,6 +22,10 @@ test:
 
 production:
   <<: *default
-  database: db/production.sqlite3
   adapter: sqlite3
+  database: db/production.sqlite3
+
+
+  adapter: sqlite3
+
   timeout: 10000
