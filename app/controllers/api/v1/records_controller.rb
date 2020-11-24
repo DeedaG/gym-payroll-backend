@@ -1,6 +1,6 @@
 class Api::V1::RecordsController < ApplicationController
 
-  before_action :set_group, only: [:show, :update, :destroy]
+  before_action :set_record, only: [:show, :update, :destroy]
 
   def index
     @records = Record.all
