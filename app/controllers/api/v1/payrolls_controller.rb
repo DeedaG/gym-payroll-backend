@@ -21,24 +21,25 @@ class Api::V1::PayrollsController < ApplicationController
   end
 
 
+  # def create
+  #   # @payroll = Payroll.new(payroll_params)
+  #   @payrolls = current_user.payrolls
+  #   @payroll = current_user.payrolls.build(payroll_params)
+  #   if params[:records] != "" && params[:records] != nil
+  #     @records = params[:records].map do |rid|
+  #                 rid[:id]
+  #               end
+  #     else
+  #     end
+  #     if @records != nil
+  #       @payroll.records = Record.find(@records.uniq)
+  #     end
+  #   end
+
+
   def create
-    # @payroll = Payroll.new(payroll_params)
     @payrolls = current_user.payrolls
     @payroll = current_user.payrolls.build(payroll_params)
-    if params[:records] != "" && params[:records] != nil
-      @records = params[:records].map do |rid|
-                  rid[:id]
-                end
-      else
-      end
-      if @records != nil
-        @payroll.records = Record.find(@records.uniq)
-      end
-
-
-  def create
-    @payroll = current_user.payrolls.build(payroll_params)
-
 
     if @payroll.save
       # binding.pry
@@ -81,24 +82,19 @@ class Api::V1::PayrollsController < ApplicationController
   end
 
   def destroy
-    if params[:records] != "" && params[:records] != nil
-      @records = params[:records].map do |rid|
-                  rid[:id]
-                end
-      else
-      end
-      if @records != nil
-        @payroll.records = Record.find(@records.uniq)
-      end
+    # if params[:records] != "" && params[:records] != nil
+    #   @records = params[:records].map do |rid|
+    #               rid[:id]
+    #             end
+    #   else
+    #   end
+    #   if @records != nil
+    #     @payroll.records = Record.find(@records.uniq)
+    #   end
 
-    @payroll.records.destroy
-
+    # @payroll.records.destroy
     @payroll.destroy
-
-
-
     render json: PayrollSerializer.new(@payrolls)
-
   end
 
   private
