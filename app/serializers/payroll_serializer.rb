@@ -3,8 +3,6 @@ class PayrollSerializer
 
   attributes :id, :payPeriod, :total, :records
 
-  attributes :payPeriod, :total, :records
-
   def records
     records.map(record => record.payroll_id = payroll.id)
   end
